@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/blog/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="关于编码的原理对于小朋友们来说比较复杂，等以后有了一定的编程经验，就会好理解一些。所以下面的内容看不懂也没关系，能解决问题就OK。默认情况下，Python 源码文件以 UTF-8 编码方式处理。如果不使用默认编码，那么文件的第一行要写成特殊的注释。否则可能会出现乱码。比如：1# -*- coding: cp936 -*- 关于“第一行”规则，有一种例外情况，程序可能运行在unix、linux系统中">
+<meta name="keywords" content="python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【python】理解源文件的字符编码">
+<meta property="og:url" content="http://www.lianghuaquan.com/blog/python-0010-Python-Interpreter/index.html">
+<meta property="og:site_name" content="大梦想家">
+<meta property="og:description" content="关于编码的原理对于小朋友们来说比较复杂，等以后有了一定的编程经验，就会好理解一些。所以下面的内容看不懂也没关系，能解决问题就OK。默认情况下，Python 源码文件以 UTF-8 编码方式处理。如果不使用默认编码，那么文件的第一行要写成特殊的注释。否则可能会出现乱码。比如：1# -*- coding: cp936 -*- 关于“第一行”规则，有一种例外情况，程序可能运行在unix、linux系统中">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.lianghuaquan.com/blog/images/python-0010-Interpreter/ansi.png">
+<meta property="og:image" content="http://www.lianghuaquan.com/blog/images/python-0010-Interpreter/error.png">
+<meta property="og:image" content="http://www.lianghuaquan.com/blog/images/python-0010-Interpreter/open-ansi.png">
+<meta property="og:image" content="http://www.lianghuaquan.com/blog/images/python-0010-Interpreter/utf-8.png">
+<meta property="og:updated_time" content="2019-04-02T08:51:03.684Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【python】理解源文件的字符编码">
+<meta name="twitter:description" content="关于编码的原理对于小朋友们来说比较复杂，等以后有了一定的编程经验，就会好理解一些。所以下面的内容看不懂也没关系，能解决问题就OK。默认情况下，Python 源码文件以 UTF-8 编码方式处理。如果不使用默认编码，那么文件的第一行要写成特殊的注释。否则可能会出现乱码。比如：1# -*- coding: cp936 -*- 关于“第一行”规则，有一种例外情况，程序可能运行在unix、linux系统中">
+<meta name="twitter:image" content="http://www.lianghuaquan.com/blog/images/python-0010-Interpreter/ansi.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://www.lianghuaquan.com/blog/python-0010-Python-Interpreter/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【python】理解源文件的字符编码 | 大梦想家</title>
+  
+
+
+
+
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3fef1a0666341b1bcc27e1a19a80060b";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">大梦想家</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">我们因梦想而伟大<br>所有的成功者都是大梦想家</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.lianghuaquan.com/blog/blog/python-0010-Python-Interpreter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张志宇">
+      <meta itemprop="description" content="编程 python java <br>商品期货 量化交易">
+      <meta itemprop="image" content="/blog/images/lianghuaquan.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大梦想家">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【python】理解源文件的字符编码
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-02 22:34:59 / 修改时间：16:51:03" itemprop="dateCreated datePublished" datetime="2019-04-02T22:34:59+08:00">2019-04-02</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>关于编码的原理对于小朋友们来说比较复杂，等以后有了一定的编程经验，就会好理解一些。所以下面的内容看不懂也没关系，能解决问题就OK。<br>默认情况下，Python 源码文件以 UTF-8 编码方式处理。<br>如果不使用默认编码，那么文件的第一行要写成特殊的注释。否则可能会出现乱码。<br>比如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: cp936 -*-</span></span><br></pre></td></tr></table></figure></p>
+<p>关于“第一行”规则，有一种例外情况，程序可能运行在unix、linux系统中。这种情况下，编码声明就要写在文件的第二行。例如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="comment"># -*- coding: cp936 -*-</span></span><br></pre></td></tr></table></figure></p>
+<p>英文单词：coding是“编码”的意思。<br>cp936，指的就是我们国家的简体中文(GB2312)编码<br>dos窗口执行chcp命令，可查看WIN7系统的文字编码为“活动代码页: 936”<br>简单的说：GB2312是简体中文的字符集编码<br>而常听到的GBK是GB2312的扩展，不仅仅只是显示简体还有繁体等。<br>刚才说的这些内容看不懂没关系，很多工作了几年的软件开发工程师，关于这些编码的原理，脑子里还是一团浆糊呢。<br>如果把编码问题彻底理解了，那么至少可以秒杀一半的工作了几年的软件开发工程师了。<br>不过，下面的小实验必须做，这对小朋友们理解编码问题还是有帮助的。</p>
+<h2 id="小实验1"><a href="#小实验1" class="headerlink" title="小实验1"></a>小实验1</h2><p>启动IDLE，打开我们曾经保存的文件：0001.py<br>现在，文件的内容应该是<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">"hello world"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>运行一下，应该没问题，在“Python shell”窗口，可以看到程序的输出。<br>现在，把打印的内容改为下面的中文。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">"你好 世界"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>保存。再运行一下，也没问题，在“Python shell”窗口，可以看到输出了正确的中文，并没有看到乱码。<br>那么，问题来了，刚才不是讲，<strong>如果不使用默认编码，那么文件的第一 行要写成特殊的注释。否则可能会出现乱码。</strong><br>那为什么，没有写特殊注释，也能输出中文，没有看到乱码呢？<br>原来这是IDLE做的手脚。<br>当我们的源文件里面的代码全部都是英文时，IDLE把源文件保存为ANSI 编码的格式。<br>由于没有额外的特殊的注释，IDLE以为这是英文的程序，会按照iso8859-1编码来读取。<br>在我们的中文操作系统，ANSI 编码就是GB2312编码。GB2312编码表示英文26个小写英文字母还有26个大写英文字母与iso8859-1编码的表示方法是一样的，所以不用加上特殊的注释也没问题。<br>但如果源码中有中文，IDLE在保存问件时，把源文件自动保存为UTF-8 编码的格式。这样也没问题。<br>但是，如果源码中有中文，没有特别的注释，文件却保存为ANSI 编码，IDLE还以为是英文的文件呢，会按照iso8859-1编码读取文件，iso8859-1编码本身就没法表示中文， 这就有问题了。</p>
+<h2 id="小实验2"><a href="#小实验2" class="headerlink" title="小实验2"></a>小实验2</h2><p>下面按照我的步骤，一步一步做做看：<br>确保文件的内容里没有中文<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">"hello world"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>从“File”菜单中选择“Save”保存程序。这时，因为文件的内容都是英文，没有中文。IDLE并不知道你是中国人还是外国人， 所以，IDLE比较傻，既然你没有特殊的注释，那么只是简单的把文件保存为“ANSI”格式。<br>由于IDLE在咱们不知情的情况下，会根据情况偷偷的改变文件的，我们为了一探究竟，不用IDE，而是用Windows自带的“记事本”来操作。<br>接下来，从“我的电脑”找到保存的文件“0001.py”<br>右键文件名，选择“打开方式”，再选择“记事本”，<br>在打开的“记事本”窗口，选择“文件”“另存为”，这样会打开“另存为”对话框，注意右下角“编码”部分，是不是显示为“ANSI”？<br><img src="/blog/images/python-0010-Interpreter/ansi.png" alt><br>此时，点击“取消”，回到“记事本”的编辑界面，修改我们的代码，改为<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">"你好 世界"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>选择菜单：“文件”“保存”。这时，“记事本”不会像IDLE那样自动的偷偷的改变文件的编码！文件的编码依然是“ANSI”。<br>这时，如果回到IDLE的编辑器，从“Run”菜单中选择“Run Module”运行程序。IDEL会读取文件，然后运行，所以回报如下错误：<br><img src="/blog/images/python-0010-Interpreter/error.png" alt><br>再如果从“Python shell”窗口重新打开文件，则会提示：<br><img src="/blog/images/python-0010-Interpreter/open-ansi.png" alt><br>这个意思是说：如果没有特殊的注释，IDLE认为这时英文的程序，就会按照 iso-8859-1来读取文件，等读到中文的时候，IDLE不认识，认为编码不对，IDLE想把文件内容转换为UTF-8编码，因为UTF-8编码可以表示中文，但需要跟你确认文件当前使用的编码是不是cp936。<br>python自动检测到的cp936，就是ANSI的意思。你如果点确定，IDLE就可以正确读取文件了。<br>这时，在IDLE的编辑器，从“Run”菜单中选择“Run Module”运行程序。IDLE会提示你保存文件，你点击“确定”即可。你应该可以看到正确的输出了。<br>此时的文件，已经被IDLE偷偷的保存为UTF-8 编码的格式，而不是原来的“ANSI”格式了。</p>
+<p>不信？从“我的电脑”找到保存的文件“0001.py”<br>右键文件名，选择“打开方式”，再选择“记事本”，<br>在打开的“记事本窗口”，选择“文件”“另存为”，这样会打开“另存为”对话框，注意右下角“编码”部分，是不是显示为“UTF-8”？<br><img src="/blog/images/python-0010-Interpreter/utf-8.png" alt></p>
+<h2 id="小实验3"><a href="#小实验3" class="headerlink" title="小实验3"></a>小实验3</h2><p>没中文内容时保存为ANSI编码，有中文内容保存为UTF-8编码。<br>那，如果有程序中文，非要保存为ANSI编码，可IDLE以为是英文，怎么办呢？那就得在程序第一行，加上下面这句话。<br>记住，我们还用Windows自带的“记事本”来操作。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: cp936 -*-</span></span><br><span class="line">print(<span class="string">"你好 世界"</span>)</span><br></pre></td></tr></table></figure>
+<p>cp936，就是ANSI的意思。<br>ANSI在Windows中文操作系统下，就是我们国家的简体中文(GB2312)字符集。</p>
+<h3 id="编辑文件"><a href="#编辑文件" class="headerlink" title="编辑文件"></a>编辑文件</h3><p>从“我的电脑”找到保存的文件“0001.py”<br>右键文件名，选择“打开方式”，再选择“记事本”，<br>在第一行，添加完特殊的注释！<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: cp936 -*-</span></span><br><span class="line">print(<span class="string">"你好 世界"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>在打开的“记事本”窗口，选择“文件”“另存为”，这样会打开“另存为”对话框，我们来观察一下，确认右下角“编码”部分为“ANSI”，<br>如果不是“ANSI”，选中“ANSI”，点击保存。</p>
+<h3 id="从IDLE打开并运行"><a href="#从IDLE打开并运行" class="headerlink" title="从IDLE打开并运行"></a>从IDLE打开并运行</h3><p>启动IDLE，打开我们刚刚保存的文件：0001.py<br>这时，IDLE就知道，哦，这是中国人写的程序，我要按照中文的字符集来读入文件。<br>运行程序，我们可以得到正确的结果。</p>
+<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p>本节课，知识点比较复杂也比较不好理解，请记住如下几点：</p>
+<ol>
+<li>保存到“我的电脑”里的程序文件。可以是“ANSI”编码，也可以是“UTF-8”编码。</li>
+<li>“ANSI”编码可以表示中文，“UTF-8”编码也可以表示中文。</li>
+<li>还有一种编码：“iso-8859-1”，只能表示英文。</li>
+<li>如果是“ANSI”编码，需要添加特殊的注释。</li>
+<li>如果是“ANSI”编码，并且没有特殊的注释，IDLE会以为只有英文，就会按照“iso-8859-1”来读取文件。这样如果有中文，就会出现错误，有可能出现乱码。</li>
+<li>统一的简单的解决办法：永远保存为“UTF-8”。这样IDLE有办法知道这是“UTF-8”，不会出现错误，没有乱码。</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center;">
+  <img id="wechat_subscriber_qcode" src="/blog/images/wechat-qcode.jpg" alt="张志宇 wechat" style="width: 200px; max-width: 100%;">
+  <div>咨询请加微信</div>
+</div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/python-0009-child/" rel="next" title="【python】【置顶】【随时更新】学习顺序">
+                <i class="fa fa-chevron-left"></i> 【python】【置顶】【随时更新】学习顺序
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MzMyNy8xOTg2OA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/blog/images/lianghuaquan.png" alt="张志宇">
+            
+              <p class="site-author-name" itemprop="name">张志宇</p>
+              <div class="site-description motion-element" itemprop="description">编程 python java <br>商品期货 量化交易</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/blog/archives/">
+                
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/blog/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/blog/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#小实验1"><span class="nav-number">1.</span> <span class="nav-text">小实验1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小实验2"><span class="nav-number">2.</span> <span class="nav-text">小实验2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小实验3"><span class="nav-number">3.</span> <span class="nav-text">小实验3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编辑文件"><span class="nav-number">3.1.</span> <span class="nav-text">编辑文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从IDLE打开并运行"><span class="nav-number">3.2.</span> <span class="nav-text">从IDLE打开并运行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结："><span class="nav-number">4.</span> <span class="nav-text">总结：</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张志宇</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/blog/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/blog/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/blog/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/blog/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/blog/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/blog/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/blog/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script>
+  window.livereOptions = {
+    refer: 'python-0010-Python-Interpreter/'
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
