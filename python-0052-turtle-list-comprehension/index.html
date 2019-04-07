@@ -100,30 +100,24 @@
 
 
 
-  <meta name="description" content="今天教大家另外一个运行python程序的方法：从dos窗口运行python点击屏幕左下角“开始”按钮搜索框内搜索“cmd”，搜索结果里面，找到“cmd.exe”，打开它输入“python”，再按下回车键，即进入python运行环境，看到&amp;gt;&amp;gt;&amp;gt;提示符输入 print(1+1) ，再按下回车键，即可看到运行结果小朋友，试着看看python能不能做更难的题目，比如print(100+5">
-<meta name="keywords" content="python">
+  <meta name="description" content="推导式是Python中很强大的、很受欢迎的特性，具有语言简洁，速度快等优点。推导式包括:列表推导式、字典推导式、集合推导式、嵌套列表推导式。列表推导式提供了一种创建列表的简洁方法。列表推导式书写形式：[表达式 for 变量 in 列表]    或者  [表达式 for 变量 in 列表 if 条件]举例： （1）列表平方1234lst = [2,6,3,5,9]lst2 = [x**2 for x">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【python】从dos窗口运行python程序">
-<meta property="og:url" content="http://www.lianghuaquan.com/blog/python-0006-helloworld-dos/index.html">
+<meta property="og:title" content="【python】列表推导式">
+<meta property="og:url" content="http://www.lianghuaquan.com/blog/python-0052-turtle-list-comprehension/index.html">
 <meta property="og:site_name" content="大梦想家">
-<meta property="og:description" content="今天教大家另外一个运行python程序的方法：从dos窗口运行python点击屏幕左下角“开始”按钮搜索框内搜索“cmd”，搜索结果里面，找到“cmd.exe”，打开它输入“python”，再按下回车键，即进入python运行环境，看到&amp;gt;&amp;gt;&amp;gt;提示符输入 print(1+1) ，再按下回车键，即可看到运行结果小朋友，试着看看python能不能做更难的题目，比如print(100+5">
+<meta property="og:description" content="推导式是Python中很强大的、很受欢迎的特性，具有语言简洁，速度快等优点。推导式包括:列表推导式、字典推导式、集合推导式、嵌套列表推导式。列表推导式提供了一种创建列表的简洁方法。列表推导式书写形式：[表达式 for 变量 in 列表]    或者  [表达式 for 变量 in 列表 if 条件]举例： （1）列表平方1234lst = [2,6,3,5,9]lst2 = [x**2 for x">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://www.lianghuaquan.com/blog/images/python_0001_02.png">
-<meta property="og:image" content="http://www.lianghuaquan.com/blog/images/python_0002_01.png">
-<meta property="og:image" content="http://www.lianghuaquan.com/blog/images/python_0002_02.png">
-<meta property="og:image" content="http://www.lianghuaquan.com/blog/images/python_0002_03.png">
-<meta property="og:updated_time" content="2019-03-28T01:56:30.256Z">
+<meta property="og:updated_time" content="2019-04-07T02:23:48.768Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【python】从dos窗口运行python程序">
-<meta name="twitter:description" content="今天教大家另外一个运行python程序的方法：从dos窗口运行python点击屏幕左下角“开始”按钮搜索框内搜索“cmd”，搜索结果里面，找到“cmd.exe”，打开它输入“python”，再按下回车键，即进入python运行环境，看到&amp;gt;&amp;gt;&amp;gt;提示符输入 print(1+1) ，再按下回车键，即可看到运行结果小朋友，试着看看python能不能做更难的题目，比如print(100+5">
-<meta name="twitter:image" content="http://www.lianghuaquan.com/blog/images/python_0001_02.png">
+<meta name="twitter:title" content="【python】列表推导式">
+<meta name="twitter:description" content="推导式是Python中很强大的、很受欢迎的特性，具有语言简洁，速度快等优点。推导式包括:列表推导式、字典推导式、集合推导式、嵌套列表推导式。列表推导式提供了一种创建列表的简洁方法。列表推导式书写形式：[表达式 for 变量 in 列表]    或者  [表达式 for 变量 in 列表 if 条件]举例： （1）列表平方1234lst = [2,6,3,5,9]lst2 = [x**2 for x">
 
 
 
 
 
 
-  <link rel="canonical" href="http://www.lianghuaquan.com/blog/python-0006-helloworld-dos/">
+  <link rel="canonical" href="http://www.lianghuaquan.com/blog/python-0052-turtle-list-comprehension/">
 
 
 
@@ -133,7 +127,7 @@
   };
 </script>
 
-  <title>【python】从dos窗口运行python程序 | 大梦想家</title>
+  <title>【python】列表推导式 | 大梦想家</title>
   
 
 
@@ -346,7 +340,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.lianghuaquan.com/blog/blog/python-0006-helloworld-dos/">
+    <link itemprop="mainEntityOfPage" href="http://www.lianghuaquan.com/blog/blog/python-0052-turtle-list-comprehension/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="张志宇">
@@ -363,7 +357,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">【python】从dos窗口运行python程序
+          <h1 class="post-title" itemprop="name headline">【python】列表推导式
 
               
             
@@ -389,24 +383,12 @@
                 
               
 
-              <time title="创建时间：2019-03-20 15:59:13" itemprop="dateCreated datePublished" datetime="2019-03-20T15:59:13+08:00">2019-03-20</time>
+              <time title="创建时间：2019-04-07 09:04:03 / 修改时间：10:23:48" itemprop="dateCreated datePublished" datetime="2019-04-07T09:04:03+08:00">2019-04-07</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-03-28 09:56:30" itemprop="dateModified" datetime="2019-03-28T09:56:30+08:00">2019-03-28</time>
               
             
           </span>
@@ -440,7 +422,10 @@
       
 
       
-        <p>今天教大家另外一个运行python程序的方法：从dos窗口运行python<br>点击屏幕左下角“开始”按钮<br><img src="/blog/images/python_0001_02.png" alt><br>搜索框内搜索“cmd”，搜索结果里面，找到“cmd.exe”，打开它<br><img src="/blog/images/python_0002_01.png" alt><br>输入<code>“python”</code>，再按下回车键，即进入python运行环境，看到&gt;&gt;&gt;提示符<br><img src="/blog/images/python_0002_02.png" alt><br>输入 <code>print(1+1) </code>，再按下回车键，即可看到运行结果<br><img src="/blog/images/python_0002_03.png" alt><br>小朋友，试着看看python能不能做更难的题目，比如<br><code>print(100+501) </code><br><code>print(102*145) </code><br><code>print(45/5) </code><br><code>print(45-6) </code></p>
+        <p>推导式是Python中很强大的、很受欢迎的特性，具有语言简洁，速度快等优点。推导式包括:列表推导式、字典推导式、集合推导式、嵌套列表推导式。<br>列表推导式提供了一种创建列表的简洁方法。列表推导式书写形式：[表达式 for 变量 in 列表]    或者  [表达式 for 变量 in 列表 if 条件]<br>举例：</p>
+<p>（1）列表平方<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lst = [<span class="number">2</span>,<span class="number">6</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">9</span>]</span><br><span class="line">lst2 = [x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> lst]</span><br><span class="line">print(lst2)</span><br><span class="line"><span class="comment">#[4, 36, 9, 25, 81]</span></span><br></pre></td></tr></table></figure></p>
+<p>（2）列表偶数<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lst = [<span class="number">2</span>,<span class="number">6</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">9</span>]</span><br><span class="line">lst2 = [ x <span class="keyword">for</span> x <span class="keyword">in</span> lst <span class="keyword">if</span> x%<span class="number">2</span> == <span class="number">0</span>]</span><br><span class="line">print(lst2)</span><br><span class="line"><span class="comment">#[2, 6]</span></span><br></pre></td></tr></table></figure></p>
+<p>（3）移除元音字母<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">'this is list example'</span></span><br><span class="line">vowels = <span class="string">'aeiou'</span></span><br><span class="line">lst2 = [ i <span class="keyword">for</span> i <span class="keyword">in</span> s <span class="keyword">if</span> i <span class="keyword">not</span> <span class="keyword">in</span> vowels]</span><br><span class="line">print(lst2)</span><br><span class="line"><span class="comment">#['t', 'h', 's', ' ', 's', ' ', 'l', 's', 't', ' ', 'x', 'm', 'p', 'l']</span></span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -468,12 +453,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/blog/tags/python/" rel="tag"># python</a>
-          
-        </div>
-      
 
       
       
@@ -483,8 +462,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/python-0005-idle/" rel="next" title="【python】从IDLE运行python程序">
-                <i class="fa fa-chevron-left"></i> 【python】从IDLE运行python程序
+              <a href="/blog/python-0052-turtle-list/" rel="next" title="【python】序列类型 List">
+                <i class="fa fa-chevron-left"></i> 【python】序列类型 List
               </a>
             
           </div>
@@ -493,8 +472,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/python-0007-helloworld-file/" rel="prev" title="【python】从文件运行python程序">
-                【python】从文件运行python程序 <i class="fa fa-chevron-right"></i>
+              <a href="/blog/python-0052-turtle-genexpr/" rel="prev" title="【python】生成器表达式">
+                【python】生成器表达式 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -789,7 +768,7 @@
   
     <script>
   window.livereOptions = {
-    refer: 'python-0006-helloworld-dos/'
+    refer: 'python-0052-turtle-list-comprehension/'
   };
   (function(d, s) {
     var j, e = d.getElementsByTagName(s)[0];
