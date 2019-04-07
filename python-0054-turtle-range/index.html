@@ -100,24 +100,24 @@
 
 
 
-  <meta name="description" content="编程 python java 商品期货 量化交易">
+  <meta name="description" content="123456789101112from turtle import *colors = [&quot;red&quot;,&quot;yellow&quot;,&quot;blue&quot;,&quot;green&quot;]#ys = [0,1,2,3]#for y in ys:for y in range(4):    print(y)    up()    goto(-200,y*50)    down()    width(50)    color(colors[">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python-0052-turtle-genexpr">
-<meta property="og:url" content="http://www.lianghuaquan.com/blog/python-0052-turtle-genexpr-1/index.html">
+<meta property="og:title" content="【python】基本序列类型 range">
+<meta property="og:url" content="http://www.lianghuaquan.com/blog/python-0054-turtle-range/index.html">
 <meta property="og:site_name" content="大梦想家">
-<meta property="og:description" content="编程 python java 商品期货 量化交易">
+<meta property="og:description" content="123456789101112from turtle import *colors = [&quot;red&quot;,&quot;yellow&quot;,&quot;blue&quot;,&quot;green&quot;]#ys = [0,1,2,3]#for y in ys:for y in range(4):    print(y)    up()    goto(-200,y*50)    down()    width(50)    color(colors[">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-07T01:17:50.929Z">
+<meta property="og:updated_time" content="2019-04-07T14:39:07.884Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python-0052-turtle-genexpr">
-<meta name="twitter:description" content="编程 python java 商品期货 量化交易">
+<meta name="twitter:title" content="【python】基本序列类型 range">
+<meta name="twitter:description" content="123456789101112from turtle import *colors = [&quot;red&quot;,&quot;yellow&quot;,&quot;blue&quot;,&quot;green&quot;]#ys = [0,1,2,3]#for y in ys:for y in range(4):    print(y)    up()    goto(-200,y*50)    down()    width(50)    color(colors[">
 
 
 
 
 
 
-  <link rel="canonical" href="http://www.lianghuaquan.com/blog/python-0052-turtle-genexpr-1/">
+  <link rel="canonical" href="http://www.lianghuaquan.com/blog/python-0054-turtle-range/">
 
 
 
@@ -127,7 +127,7 @@
   };
 </script>
 
-  <title>python-0052-turtle-genexpr | 大梦想家</title>
+  <title>【python】基本序列类型 range | 大梦想家</title>
   
 
 
@@ -340,7 +340,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.lianghuaquan.com/blog/blog/python-0052-turtle-genexpr-1/">
+    <link itemprop="mainEntityOfPage" href="http://www.lianghuaquan.com/blog/blog/python-0054-turtle-range/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="张志宇">
@@ -357,7 +357,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">python-0052-turtle-genexpr
+          <h1 class="post-title" itemprop="name headline">【python】基本序列类型 range
 
               
             
@@ -383,9 +383,13 @@
                 
               
 
-              <time title="创建时间：2019-04-07 09:17:50" itemprop="dateCreated datePublished" datetime="2019-04-07T09:17:50+08:00">2019-04-07</time>
+              <time title="创建时间：2019-04-07 07:40:21 / 修改时间：22:39:07" itemprop="dateCreated datePublished" datetime="2019-04-07T07:40:21+08:00">2019-04-07</time>
             
 
+            
+              
+
+              
             
           </span>
 
@@ -418,7 +422,16 @@
       
 
       
-        
+        <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> turtle <span class="keyword">import</span> *</span><br><span class="line">colors = [<span class="string">"red"</span>,<span class="string">"yellow"</span>,<span class="string">"blue"</span>,<span class="string">"green"</span>]</span><br><span class="line"><span class="comment">#ys = [0,1,2,3]</span></span><br><span class="line"><span class="comment">#for y in ys:</span></span><br><span class="line"><span class="keyword">for</span> y <span class="keyword">in</span> range(<span class="number">4</span>):</span><br><span class="line">    print(y)</span><br><span class="line">    up()</span><br><span class="line">    goto(<span class="number">-200</span>,y*<span class="number">50</span>)</span><br><span class="line">    down()</span><br><span class="line">    width(<span class="number">50</span>)</span><br><span class="line">    color(colors[y])</span><br><span class="line">    forward(<span class="number">400</span>)</span><br></pre></td></tr></table></figure>
+<p>有三种基本序列类型：列表（list）, 元组（tuple） 和 range 对象。<br>列表（list）是可变序列，<br>range 类型表示不可变的数字序列，通常用于在 for 循环中循环指定的次数。</p>
+<h2 id="range构造器"><a href="#range构造器" class="headerlink" title="range构造器"></a>range构造器</h2><p>class range(stop)<br>class range(start, stop[, step])<br>range 构造器的参数必须为整数（可以是内置的 int 或任何实现了 <code><strong>index</strong></code> 特殊方法的对象）。<br>如果省略 step 参数，其默认值为 1。 如果省略 start 参数，其默认值为 0，如果 step 为零则会引发 ValueError。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(range(<span class="number">10</span>))</span><br><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(range(<span class="number">1</span>, <span class="number">11</span>))</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(range(<span class="number">0</span>, <span class="number">30</span>, <span class="number">5</span>))</span><br><span class="line">[<span class="number">0</span>, <span class="number">5</span>, <span class="number">10</span>, <span class="number">15</span>, <span class="number">20</span>, <span class="number">25</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(range(<span class="number">0</span>, <span class="number">10</span>, <span class="number">3</span>))</span><br><span class="line">[<span class="number">0</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">9</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(range(<span class="number">0</span>, <span class="number">-10</span>, <span class="number">-1</span>))</span><br><span class="line">[<span class="number">0</span>, <span class="number">-1</span>, <span class="number">-2</span>, <span class="number">-3</span>, <span class="number">-4</span>, <span class="number">-5</span>, <span class="number">-6</span>, <span class="number">-7</span>, <span class="number">-8</span>, <span class="number">-9</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(range(<span class="number">0</span>))</span><br><span class="line">[]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(range(<span class="number">1</span>, <span class="number">0</span>))</span><br><span class="line">[]</span><br></pre></td></tr></table></figure></p>
+<h2 id="range索引"><a href="#range索引" class="headerlink" title="range索引"></a>range索引</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list(range(<span class="number">0</span>, <span class="number">-10</span>, <span class="number">-2</span>))[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="range负索引"><a href="#range负索引" class="headerlink" title="range负索引"></a>range负索引</h2><p>range 对象确实支持负索引，但是会将其解读为从正索引所确定的序列的末尾开始索引。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list(range(<span class="number">0</span>, <span class="number">-10</span>, <span class="number">-2</span>))[<span class="number">-1</span>]</span><br></pre></td></tr></table></figure></p>
+<h2 id="range遍历"><a href="#range遍历" class="headerlink" title="range遍历"></a>range遍历</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> y <span class="keyword">in</span> range(<span class="number">4</span>):</span><br><span class="line">    print(y)</span><br></pre></td></tr></table></figure>
+<p>range 对象实现了 一般 序列的所有操作，但拼接和重复除外（这是由于 range 对象只能表示符合严格模式的序列，而重复和拼接通常都会违反这样的模式）。</p>
+<h2 id="range优势"><a href="#range优势" class="headerlink" title="range优势"></a>range优势</h2><p>range 类型相比常规 list 或 tuple 的优势在于一个 range 对象总是占用固定数量的（较小）内存，不论其所表示的范围有多大（因为它只保存了 start, stop 和 step 值，并会根据需要计算具体单项或子范围的值）。</p>
+<h2 id="range比较是否相等"><a href="#range比较是否相等" class="headerlink" title="range比较是否相等"></a>range比较是否相等</h2><p>使用 == 和 != 检测 range 对象是否相等是将其作为序列来比较。 也就是说，如果两个 range 对象表示相同的值序列就认为它们是相等的。<br>请注意比较结果相等的两个 range 对象可能会具有不同的 start, stop 和 step 属性，例如 range(0) == range(2, 1, 3) 而 range(0, 3, 2) == range(0, 4, 2)。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>range(<span class="number">0</span>) == range(<span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>range(<span class="number">0</span>, <span class="number">3</span>, <span class="number">2</span>) == range(<span class="number">0</span>, <span class="number">4</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure></p>
+
       
     </div>
 
@@ -454,8 +467,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/python-0052-turtle-genexpr/" rel="next" title="【python】生成器表达式">
-                <i class="fa fa-chevron-left"></i> 【python】生成器表达式
+              <a href="/blog/python-0052-turtle-list/" rel="next" title="基本序列类型 list">
+                <i class="fa fa-chevron-left"></i> 基本序列类型 list
               </a>
             
           </div>
@@ -464,8 +477,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/python-0009-child/" rel="prev" title="【python】【置顶】【随时更新】学习顺序">
-                【python】【置顶】【随时更新】学习顺序 <i class="fa fa-chevron-right"></i>
+              <a href="/blog/python-0052-turtle-list-comprehension/" rel="prev" title="【python】列表推导式">
+                【python】列表推导式 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -515,8 +528,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -606,6 +628,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#range构造器"><span class="nav-number">1.</span> <span class="nav-text">range构造器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#range索引"><span class="nav-number">2.</span> <span class="nav-text">range索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#range负索引"><span class="nav-number">3.</span> <span class="nav-text">range负索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#range遍历"><span class="nav-number">4.</span> <span class="nav-text">range遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#range优势"><span class="nav-number">5.</span> <span class="nav-text">range优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#range比较是否相等"><span class="nav-number">6.</span> <span class="nav-text">range比较是否相等</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -760,7 +799,7 @@
   
     <script>
   window.livereOptions = {
-    refer: 'python-0052-turtle-genexpr-1/'
+    refer: 'python-0054-turtle-range/'
   };
   (function(d, s) {
     var j, e = d.getElementsByTagName(s)[0];
